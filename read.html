@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Baca Manga</title>
+  <title>Reader</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <h1>Reader</h1>
-  <a href="index.html" style="color:white;">⬅ Kembali</a>
+  <a href="index.html">⬅ Back</a>
 </header>
 
-<div style="padding:20px; text-align:center;">
-  <h2 id="title"></h2>
-  <p>Chapter 1</p>
-  <img src="https://via.placeholder.com/600x900" style="width:100%; max-width:500px;">
-</div>
+<div id="content" class="reader"></div>
+
+<script src="data.js"></script>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const manga = params.get("manga");
+const id = new URLSearchParams(location.search).get("id");
+const manga = mangaData.find(m => m.id === id);
 
-const titles = {
-  onepiece: "One Piece",
-  naruto: "Naruto",
-  aot: "Attack on Titan"
-};
+let currentChapter = 0;
 
-document.getElementById("title").innerText = titles[manga] || "Unknown";
+function renderChapter(){
+  const ch = manga.chapters[currentChapter];
+
+  document.getElementById("content").innerHTML = `
+    <h2>${manga.title} - Chapter ${ch.chapter}</h2>
+    ${ch.pages.map(p => `<img src="${p}">`).join("")}
+    <button onclick="next()">Next Chapter</button>
+  `;
+}
+
+function next(){
+  if(currentChapter < manga.chapters.length - 1){
+    currentChapter++;
+    renderChapter();
+  } else {
+    alert("Last chapter");
+  }
+}
+
+renderChapter();
 </script>
 
 </body>
