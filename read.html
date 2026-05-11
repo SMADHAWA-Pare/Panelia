@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Baca Manga</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Reader</h1>
+  <a href="index.html" style="color:white;">⬅ Kembali</a>
+</header>
+
+<div style="padding:20px; text-align:center;">
+  <h2 id="title"></h2>
+  <p>Chapter 1</p>
+  <img src="https://via.placeholder.com/600x900" style="width:100%; max-width:500px;">
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const manga = params.get("manga");
+
+const titles = {
+  onepiece: "One Piece",
+  naruto: "Naruto",
+  aot: "Attack on Titan"
+};
+
+document.getElementById("title").innerText = titles[manga] || "Unknown";
+</script>
+
+</body>
+</html>
